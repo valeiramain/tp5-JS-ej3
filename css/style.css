@@ -2,7 +2,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
-  background-image: url("/img/pexels-lucas-dalamarta-823750442-30683878.jpg");
+  background-image: url("/img/pexels-chigraph-1166636.jpg");
   background-repeat: no-repeat; /* Que no se repita */
   background-size: cover; /* Que ocupe toda la pantalla */
   background-position: center; /* Centrar la imagen */
@@ -12,16 +12,16 @@ main {
   flex-grow: 1;
 }
 
-
-.form-generaciones {
-  background-color: rgba(248, 247, 204, 0.4); /* con 40% de opacidad */
-  padding: 20px;
-  border-radius: 10px;
-  /* display: inline-block; */
+.colorTitulo{
+  color: #7fecff;
 }
 
-.glow-btn {
-  transition: all 0.2s ease;
-  box-shadow: 0 4px 8px rgb(209, 209, 183);
-  background-color: rgba(225, 225, 32); /* con 40% de opacidad */
+.btnColor{
+  background-color: rgb(220, 247, 100); /* blanco con 20% de opacidad */
+}
+
+.list-group-item {
+  background-color: rgba(255, 255, 255, 0.5); /* blanco con 20% de opacidad */
+  color: #000; /* texto negro para que se lea bien */
+  border: 1px solid rgba(255, 255, 255, 0.5); /* opcional: borde suave */
 }
