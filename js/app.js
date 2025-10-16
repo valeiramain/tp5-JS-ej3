@@ -1,4 +1,4 @@
-function cargarTarea(e) {
+function agregarTarea(e) {
     e.preventDefault();
     const inputTarea = document.querySelector('input')
     console.log(inputTarea.value)
@@ -17,7 +17,7 @@ function cargarTarea(e) {
 
         // escuchar evento del botón para borrar tarea
         btnEliminar.addEventListener('click', () => {
-            li.remove(); // elimina la tarea
+            li.remove(); // borra tarea
         });
 
         // agregar botón al li
@@ -39,4 +39,12 @@ const formulario = document.querySelector('form')
 const lista = document.getElementById('listaTareas')
 
 // ejecutar eventos
-formulario.addEventListener('submit', cargarTarea)
+formulario.addEventListener('submit', agregarTarea)
+
+// otra opcion para eliminar tarea
+// lista.addEventListener('click',()=>{
+//     console.log(e.target)
+//     if (e.target.classlist.contains('<i class="bi bi-trash3-fill"></i>')){
+//         e.target.parentElement.remove()
+//     }
+// })
