@@ -36,11 +36,7 @@ function cargarTarea(e) {
 
 // defino variables
 const formulario = document.querySelector('form')
-console.log(formulario)
-
 const lista = document.getElementById('listaTareas')
-console.log(lista)
-
 
 // ejecutar eventos
 formulario.addEventListener('submit', cargarTarea)
