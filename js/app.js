@@ -1,28 +1,38 @@
 function agregarTarea(e) {
     e.preventDefault();
-    const inputTarea = document.querySelector('input')
-    console.log(inputTarea.value)
-    if (inputTarea.value){
+
+    if (inputTarea.value.trim()) {
 
         // Crear li con create element
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center';
-        li.textContent = inputTarea.value;
+
+        // Crear el <p> con el texto de la tarea
+        const p = document.createElement('p');
+        p.textContent = inputTarea.value.trim();
 
         // Crear botón con basurero
         const btnEliminar = document.createElement('button');
         btnEliminar.type = 'button';
         btnEliminar.className = 'btn text-danger fs-4';
-        btnEliminar.innerHTML = '<i class="bi bi-trash3-fill"></i>';
+
+         // Crear el icono de basurero <i class="bi bi-trash3-fill">
+        const icono = document.createElement('i');
+        icono.classList.add('bi', 'bi-trash3-fill');
+          // Agregar el ícono al botón
+        btnEliminar.appendChild(icono);
 
         // escuchar evento del botón para borrar tarea
         btnEliminar.addEventListener('click', () => {
             li.remove(); // borra tarea
+            guardarTareas() // actualizar localStorage
         });
 
-        // agregar botón al li
+        // Armar la estructura: <li> ← <p> + <button>
+        li.appendChild(p);
         li.appendChild(btnEliminar);
-        // agregar li a la lista
+
+        // Agregar la tarea a la lista
         lista.appendChild(li);
 
 
@@ -34,7 +44,7 @@ function agregarTarea(e) {
 }
 
 //guarda en localStorage
-function guardarTareas(){
+function guardarTareas() {
     const elementos = lista.querySelectorAll('li')
     const arrayTareas = []
     elementos.forEach(li => {
@@ -43,9 +53,46 @@ function guardarTareas(){
     });
 
     // guardar arrayTareas en local storage en formato JSON.stringify
-    localStorage.setItem('tareas',JSON.stringify(arrayTareas))
+    localStorage.setItem('tareas', JSON.stringify(arrayTareas))
+}
 
+function cargarTareas() {
+    // leer datos del localStorage con JSON.parse
+    const arrayTareas = JSON.parse(localStorage.getItem('tareas')) || []
 
+    arrayTareas.forEach(tarealocalStorage => {
+        // Crear li con create element
+        const li = document.createElement('li');
+        li.className = 'list-group-item d-flex justify-content-between align-items-center';
+
+       // Crear el <p> con el texto de la tarea
+        const p = document.createElement('p');
+        p.textContent = tarealocalStorage.trim();
+
+        // Crear botón con basurero
+        const btnEliminar = document.createElement('button');
+        btnEliminar.type = 'button';
+        btnEliminar.className = 'btn text-danger fs-4';
+
+         // Crear el icono de basurero <i class="bi bi-trash3-fill">
+        const icono = document.createElement('i');
+        icono.classList.add('bi', 'bi-trash3-fill');
+          // Agregar el ícono al botón
+        btnEliminar.appendChild(icono);
+
+        // escuchar evento del botón para borrar tarea
+        btnEliminar.addEventListener('click', () => {
+            li.remove(); // borra tarea
+            guardarTareas() // actualizar localStorage
+        });
+
+        // Armar la estructura: <li> ← <p> + <button>
+        li.appendChild(p);
+        li.appendChild(btnEliminar);
+
+        // Agregar la tarea a la lista
+        lista.appendChild(li);
+    })
 }
 
 // ============= DOM Y LÓGICA =============
@@ -53,8 +100,7 @@ function guardarTareas(){
 // defino variables
 const formulario = document.querySelector('form')
 const lista = document.getElementById('listaTareas')
-
-//array para guardar tareas en local storage
+const inputTarea = document.querySelector('input')
 
 // ejecutar eventos
 formulario.addEventListener('submit', agregarTarea)
@@ -66,3 +112,6 @@ formulario.addEventListener('submit', agregarTarea)
 //         e.target.parentElement.remove()
 //     }
 // })
+
+// cuando cargue el sitio web
+document.addEventListener('DOMContentLoaded', cargarTareas)
