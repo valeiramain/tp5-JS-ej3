@@ -3,6 +3,7 @@ function agregarTarea(e) {
 
     if (inputTarea.value.trim()) {
 
+        //----- usando CRETEELEMENT---------------
         // Crear li con create element
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center';
@@ -16,17 +17,11 @@ function agregarTarea(e) {
         btnEliminar.type = 'button';
         btnEliminar.className = 'btn text-danger fs-4';
 
-         // Crear el icono de basurero <i class="bi bi-trash3-fill">
+        // Crear el icono de basurero <i class="bi bi-trash3-fill">
         const icono = document.createElement('i');
         icono.classList.add('bi', 'bi-trash3-fill');
-          // Agregar el ícono al botón
+        // Agregar el ícono al botón
         btnEliminar.appendChild(icono);
-
-        // escuchar evento del botón para borrar tarea
-        btnEliminar.addEventListener('click', () => {
-            li.remove(); // borra tarea
-            guardarTareas() // actualizar localStorage
-        });
 
         // Armar la estructura: <li> ← <p> + <button>
         li.appendChild(p);
@@ -35,6 +30,12 @@ function agregarTarea(e) {
         // Agregar la tarea a la lista
         lista.appendChild(li);
 
+        //--- fin CREATE ELEMENTE--------------
+        // escuchar evento del botón para borrar tarea
+        btnEliminar.addEventListener('click', () => {
+            li.remove(); // borra tarea
+            guardarTareas() // actualizar localStorage
+        });
 
         guardarTareas()
         formulario.reset();
@@ -46,6 +47,7 @@ function agregarTarea(e) {
 //guarda en localStorage
 function guardarTareas() {
     const elementos = lista.querySelectorAll('li')
+    console.log(elementos)
     const arrayTareas = []
     elementos.forEach(li => {
         const textoTarea = li.firstChild.textContent.trim()
@@ -61,11 +63,12 @@ function cargarTareas() {
     const arrayTareas = JSON.parse(localStorage.getItem('tareas')) || []
 
     arrayTareas.forEach(tarealocalStorage => {
+        //----- usando CRETEELEMENT---------------
         // Crear li con create element
         const li = document.createElement('li');
         li.className = 'list-group-item d-flex justify-content-between align-items-center';
 
-       // Crear el <p> con el texto de la tarea
+        // Crear el <p> con el texto de la tarea
         const p = document.createElement('p');
         p.textContent = tarealocalStorage.trim();
 
@@ -74,17 +77,11 @@ function cargarTareas() {
         btnEliminar.type = 'button';
         btnEliminar.className = 'btn text-danger fs-4';
 
-         // Crear el icono de basurero <i class="bi bi-trash3-fill">
+        // Crear el icono de basurero <i class="bi bi-trash3-fill">
         const icono = document.createElement('i');
         icono.classList.add('bi', 'bi-trash3-fill');
-          // Agregar el ícono al botón
+        // Agregar el ícono del basurero al botón eliminar
         btnEliminar.appendChild(icono);
-
-        // escuchar evento del botón para borrar tarea
-        btnEliminar.addEventListener('click', () => {
-            li.remove(); // borra tarea
-            guardarTareas() // actualizar localStorage
-        });
 
         // Armar la estructura: <li> ← <p> + <button>
         li.appendChild(p);
@@ -92,6 +89,14 @@ function cargarTareas() {
 
         // Agregar la tarea a la lista
         lista.appendChild(li);
+        //--- fin CREATE ELEMENTE--------------
+
+        // escuchar evento del botón para borrar tarea
+        btnEliminar.addEventListener('click', () => {
+            console.log('borro tarea')
+            li.remove(); // borra tarea
+            guardarTareas() // actualizar localStorage
+        });
     })
 }
 
@@ -102,10 +107,14 @@ const formulario = document.querySelector('form')
 const lista = document.getElementById('listaTareas')
 const inputTarea = document.querySelector('input')
 
+
+// cuando cargue el sitio web
+document.addEventListener('DOMContentLoaded', cargarTareas)
+
 // ejecutar eventos
 formulario.addEventListener('submit', agregarTarea)
 
-// otra opcion para eliminar tarea usando target, cuando encuentra boton 'borrar'
+// otra opcion para eliminar tarea usando e.target, cuando encuentra boton 'borrar'
 // lista.addEventListener('click',()=>{
 //     console.log(e.target)
 //     if (e.target.classlist.contains('borrar')){
@@ -113,5 +122,3 @@ formulario.addEventListener('submit', agregarTarea)
 //     }
 // })
 
-// cuando cargue el sitio web
-document.addEventListener('DOMContentLoaded', cargarTareas)
